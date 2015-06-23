@@ -1,0 +1,104 @@
+
+body{
+background-color: grey;
+text-align:center;
+font-size:large;
+}
+
+iframe{
+position:absolute;
+top: 100px;
+left: 23em;
+right: 0px;
+text-align:left;
+}
+
+#correct{
+color:green;
+font-size:xx-large;
+}
+
+#false{
+color:red;
+font-size:xx-large;
+}
+
+.text-align{
+justify;
+}
+
+.radio{
+margin-left:20%;
+text-align:left;
+}
+
+.quizoverlay{
+top: 100px;
+left: 23em;
+right: 0px;
+height: 415px;
+width: 720px;
+z-index: 1000;
+background: white;
+opacity: 0.9;
+position:absolute;
+text-align:center;
+}
+
+.quizoverlay2{
+top: 100px;
+left: 23em;
+right: 0px;
+height: 415px;
+width: 720px;
+z-index: 1000;
+background: white;
+opacity: 0.9;
+position:absolute;
+text-align:center;
+}
+
+.quizoverlay3{
+top: 100px;
+left: 23em;
+right: 0px;
+height: 415px;
+width: 720px;
+z-index: 1000;
+background: white;
+opacity: 0.9;
+position:absolute;
+text-align:center;
+
+}
+
+.button{
+padding: 5px;
+display:inline-block;
+}
+
+.buttonCheck
+{
+height:40px;
+width: 120px;
+color: white;
+background-color: #228B22;
+border-color: #228B22;
+text-align:center;
+}
+
+.buttonSkip{
+height:40px;
+width: 120px;
+background-color: #FFFACD;
+border-color: #FFFACD;
+text-align:center;
+}
+
+#q1{
+border: 1px;
+}
+
+span{
+position:absolute;
+}

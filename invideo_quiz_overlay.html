@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <h2>In video quiz - XBlock </h2><h6>(Version - 1)</h6>
+<!-- CSS dependencies -->
+    <!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css">  		 -->
+	<link rel="stylesheet" type="text/css" href="mystyle.css">  		   
+  		
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+
+	<!-- JS dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script src="bootstrap.min.js"></script> -->
+
+	<!-- bootbox code 
+    <script src="bootbox.min.js"></script> -->
+    <script>
+	
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '450',
+          width: '720',
+          videoId: 'o3q5CrIf0kg',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        event.target.playVideo();
+	}
+	    
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+	  
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+//          setTimeout(stopVideo, 6000);
+					
+				setTimeout( function f(){ 
+				pauseVideo(); mydialog(); }, 5000);
+						
+				done = true;
+        }
+        
+      }
+	  
+	  function popup2(){
+
+				setTimeout( function f(){ 
+				pauseVideo(); mydialog2(); }, 4000);						
+	  }
+	  
+	  function popup3(){
+				setTimeout( function f(){ 
+				pauseVideo(); mydialog3(); }, 4400);
+	  }
+      
+      function stopVideo() {
+        player.stopVideo();
+      }
+	  
+	  function pauseVideo(){
+		player.pauseVideo();
+	  }
+      
+	  
+//	function hideElement(){
+//		document.getElementById('quizoverlay').style.display="none";
+//	}
+
+function mydialog(){
+	document.getElementById('quizoverlay').style.display="block";
+	}
+
+function check(){
+	
+	if(document.getElementById('option02').checked == true){
+		document.getElementById("check").innerHTML = "<label id='correct'>Correct</label>";
+		//Element.show();
+		
+	}
+	else{
+		document.getElementById("check").innerHTML = "<label id='false'>Try again</label>";
+		//Element.show();
+		
+	}
+}
+
+function skip(){
+		document.getElementById('quizoverlay').style.display="none";
+		player.playVideo();
+		popup2();
+}
+
+function mydialog2(){
+	document.getElementById('quizoverlay2').style.display="block";
+}
+
+function check2(){
+ 
+ if(document.getElementById('optionQ2').checked == true){
+		document.getElementById("check2").innerHTML = "<label id='correct'>Correct</label>";
+		//Element.show();
+ }
+ else{
+		document.getElementById("check2").innerHTML = "<label id='false'>Try again</label>";
+		//Element.show();
+ }
+ 
+}
+function skip2(){
+		document.getElementById('quizoverlay2').style.display="none";
+		player.playVideo();
+		popup3();
+}
+
+function mydialog3(){
+		document.getElementById('quizoverlay3').style.display="block";
+}
+
+function check3(){
+ 
+ if(document.getElementById('opt03').checked == true){
+		document.getElementById("check3").innerHTML = "<label id='correct'>Correct</label>";
+		//Element.show();
+ }
+ else{
+		document.getElementById("check3").innerHTML = "<label id='false'>Try again</label>";
+		//Element.show();
+ }
+ 
+}
+
+function skip3(){
+	document.getElementById('quizoverlay3').style.display="none";
+	player.playVideo();
+} 
+      
+</script>
+	
+<!-- Question 1 -->
+
+<div class="quizoverlay" id="quizoverlay" hidden="true">
+		
+		<form role="form" class="Q1" id="Q1">
+			<h3>CS101: QUIZ I</h3>
+			<div class="form-group">
+				<label for="email"><h4>Can a drawer in Dumbo&#39;s memory be empty?</h4></label>
+			</div>
+			<div class="form-group">
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="option01" value="option01"><span>Yes</span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="option02" value="option02"><span>No</span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="option03" value="option03"><span>May Be</span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="option04" value="option04"><span>Don&#39;t Know</span></label>
+				</div>
+			</div>	
+			<p></p>
+			<div class="form-group" class="button">
+				<button type="button" class="buttonCheck" onclick=check()>Check</button>
+				<button type="button" class="buttonSkip" onclick=skip()>Skip</button>
+			</div>
+			<p></p>
+			<label class="" for="check" id="check"></label>
+		</form> 
+</div>	
+
+<!-- Question 2 -->
+
+<div class="quizoverlay2" id="quizoverlay2" hidden="true">
+
+		
+		<form role="form" class="Q2" id="Q2">
+			<h3>CS101: QUIZ II</h3>
+			<div class="form-group">
+				<label for="email"><h4>Following instruction is given in a program to DUMBO <br> COUNT = COUNT + 1 <br> What will happen when Dumbo attempts to execute this instruction?</h4></label>
+			</div>
+			<div class="form-group">
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="optionQ1" value="option01"><span>Dumbo will not execute this instruction because <br> the location COUNT appears on both sides of the symbol = </span></label>
+				</div>
+				<br>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="optionQ2" value="option02"><span> Dumbo will execute the instruction and will change the value in the location COUNT</span></label>
+				</div>
+				
+			</div>	
+			
+			<p></p>
+			
+			<div class="form-group" class="button">
+				<button type="button" class="buttonCheck" onclick=check2()>Check</button>
+				<button type="button" class="buttonSkip" onclick=skip2()>Skip</button>
+			</div>
+			
+			<p></p>
+			<label class="" for="check" id="check2"></label>
+		</form> 
+</div>
+
+<!-- Question 3 -->
+
+<div class="quizoverlay3" id="quizoverlay3" hidden="true">
+
+		
+		<form role="form" class="Q3" id="Q3">
+			<h3>CS101: QUIZ III</h3>
+			<div class="form-group">
+				<label for="email"><h4>We give the following program to Mr. Dumbo: <br> Use locations A, B, SUM; Input B; SUM = A + B; Output SUM; <br> When Dumbo executes the above program, it will: </h4></label>
+			</div>
+			<div class="form-group">
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="opt01" value="option01"><span>Stop at the instruction SUM = A + B </span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="opt02" value="option02"><span>Will complete execution but will not output any value</span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="opt03" value="option03"><span>Will output the value of SUM</span></label>
+				</div>
+				<div class="radio">
+				<label><input type="radio" name="optradio" id="opt04" value="option04"><span>Don&#39;t Know</span></label>
+				</div>
+			</div>	
+			
+			<p></p>
+			
+			<div class="form-group" class="button">
+				<button type="button" class="buttonCheck" onclick=check3()>Check</button>
+				<button type="button" class="buttonSkip" onclick=skip3()>Skip</button>
+			
+			</div>
+			
+			<p></p>
+			
+			<label class="" for="check" id="check3"></label>
+		</form> 
+</div>
+
+</body>
+</html>
