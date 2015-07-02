@@ -2,7 +2,8 @@
 <html>
   <body>
   <h2>In video quiz - XBlock </h2><h6>(Version - 1)</h6>
-<!-- CSS dependencies -->
+  
+	<!-- CSS dependencies -->
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css">  		 -->
 	<link rel="stylesheet" type="text/css" href="mystyle.css">  		   
   		
@@ -13,9 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- <script src="bootstrap.min.js"></script> -->
 
-	<!-- bootbox code 
-    <script src="bootbox.min.js"></script> -->
-    <script>
+	<script>
 	
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -47,29 +46,67 @@
       // 5. The API calls this function when the player's state changes.
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
-      var done = false;
+      
+	  var done = false;
+	  var currentTime = 0;
+	  var windowSize = 200;
+	  var SEC2MILL = 1000;
+	  var stopAtQ1 = 24000;
+	  var stopAtQ2 = 8000;
+	  var stopAtQ3 = 12000;
 	  
       function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-//          setTimeout(stopVideo, 6000);
-					
-				setTimeout( function f(){ 
-				pauseVideo(); mydialog(); }, 5000);
-						
+		
+		setInterval(function(){
+				
+			currentTime = player.getCurrentTime();
+			
+			if (event.data == YT.PlayerState.PLAYING && !done) {
+				if( ( currentTime*SEC2MILL >= (stopAtQ1 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ1 + ( windowSize / 2 ) ) ) )
+				{
+				pauseVideo();
+				mydialog();
+
 				done = true;
-        }
-        
+				}	
+			}
+		},100);
       }
 	  
 	  function popup2(){
+		
+		var done = false;			
+		
+		setInterval(function(){
+		
+		currentTime = player.getCurrentTime();
+			if( ( currentTime*SEC2MILL >= (stopAtQ2 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ2 + ( windowSize / 2 ) ) ) && !done)
+			{
+				pauseVideo();
+				mydialog2();
 
-				setTimeout( function f(){ 
-				pauseVideo(); mydialog2(); }, 4000);						
+				done = true;
+			}	
+			
+		},100);
 	  }
 	  
 	  function popup3(){
-				setTimeout( function f(){ 
-				pauseVideo(); mydialog3(); }, 4400);
+
+		var done=false;
+				
+		setInterval(function(){
+			 
+			currentTime = player.getCurrentTime();
+			if( ( currentTime*SEC2MILL >= (stopAtQ3 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ3 + ( windowSize / 2 ) ) ) && !done)
+			{
+				pauseVideo();
+				mydialog3();
+				
+				done = true;
+			}	
+			
+		},100);		
 	  }
       
       function stopVideo() {
@@ -80,78 +117,64 @@
 		player.pauseVideo();
 	  }
       
-	  
-//	function hideElement(){
-//		document.getElementById('quizoverlay').style.display="none";
-//	}
-
-function mydialog(){
-	document.getElementById('quizoverlay').style.display="block";
+	function mydialog(){
+		document.getElementById('quizoverlay').style.display="block";
 	}
 
-function check(){
+	function check(){
 	
-	if(document.getElementById('option02').checked == true){
-		document.getElementById("check").innerHTML = "<label id='correct'>Correct</label>";
-		//Element.show();
-		
+		if(document.getElementById('option02').checked == true){
+			document.getElementById("check").innerHTML = "<label id='correct'>Correct</label>";		
+		}
+		else{
+			document.getElementById("check").innerHTML = "<label id='false'>Try again</label>";
+		}
 	}
-	else{
-		document.getElementById("check").innerHTML = "<label id='false'>Try again</label>";
-		//Element.show();
-		
-	}
-}
 
-function skip(){
+	function skip(){
 		document.getElementById('quizoverlay').style.display="none";
 		player.playVideo();
 		popup2();
-}
+	}
 
-function mydialog2(){
-	document.getElementById('quizoverlay2').style.display="block";
-}
+	function mydialog2(){
+		document.getElementById('quizoverlay2').style.display="block";
+	}
 
-function check2(){
+	function check2(){
  
- if(document.getElementById('optionQ2').checked == true){
-		document.getElementById("check2").innerHTML = "<label id='correct'>Correct</label>";
-		//Element.show();
- }
- else{
-		document.getElementById("check2").innerHTML = "<label id='false'>Try again</label>";
-		//Element.show();
- }
- 
-}
-function skip2(){
+		if(document.getElementById('optionQ2').checked == true){
+			document.getElementById("check2").innerHTML = "<label id='correct'>Correct</label>";
+		}
+		else{
+			document.getElementById("check2").innerHTML = "<label id='false'>Try again</label>";
+		}
+	}
+	
+	function skip2(){
 		document.getElementById('quizoverlay2').style.display="none";
 		player.playVideo();
 		popup3();
-}
+	}
 
-function mydialog3(){
+	function mydialog3(){
 		document.getElementById('quizoverlay3').style.display="block";
-}
+	}
 
-function check3(){
+	function check3(){
  
- if(document.getElementById('opt03').checked == true){
-		document.getElementById("check3").innerHTML = "<label id='correct'>Correct</label>";
-		//Element.show();
- }
- else{
-		document.getElementById("check3").innerHTML = "<label id='false'>Try again</label>";
-		//Element.show();
- }
- 
-}
+		if(document.getElementById('opt03').checked == true){
+			document.getElementById("check3").innerHTML = "<label id='correct'>Correct</label>";
+		}
+		else{
+			document.getElementById("check3").innerHTML = "<label id='false'>Try again</label>";
+		}
+	}
 
-function skip3(){
-	document.getElementById('quizoverlay3').style.display="none";
-	player.playVideo();
-} 
+	function skip3(){
+		document.getElementById('quizoverlay3').style.display="none";
+		player.playVideo();
+	} 
       
 </script>
 	

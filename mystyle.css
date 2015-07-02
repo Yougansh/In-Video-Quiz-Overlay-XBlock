@@ -2,7 +2,6 @@
 body{
 background-color: grey;
 text-align:center;
-font-size:large;
 }
 
 iframe{
@@ -10,7 +9,7 @@ position:absolute;
 top: 100px;
 left: 23em;
 right: 0px;
-text-align:left;
+text-align:center;
 }
 
 #correct{
