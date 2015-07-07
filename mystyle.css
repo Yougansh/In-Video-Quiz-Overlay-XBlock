@@ -1,7 +1,11 @@
-
 body{
-background-color: grey;
+background-color: white;
 text-align:center;
+}
+
+#time{
+color:black;
+text-align:left;
 }
 
 iframe{
@@ -89,8 +93,9 @@ text-align:center;
 .buttonSkip{
 height:40px;
 width: 120px;
-background-color: #FFFACD;
-border-color: #FFFACD;
+color: black;
+background-color: #FFE13C;
+border-color: #FFE13C;
 text-align:center;
 }
 

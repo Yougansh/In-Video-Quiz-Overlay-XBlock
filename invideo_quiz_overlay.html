@@ -2,12 +2,14 @@
 <html>
   <body>
   <h2>In video quiz - XBlock </h2><h6>(Version - 1)</h6>
-  
+	
+	<div id="time"></div>
+	
 	<!-- CSS dependencies -->
-    <!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css">  		 -->
-	<link rel="stylesheet" type="text/css" href="mystyle.css">  		   
-  		
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <link rel="stylesheet" type="text/css" href="mystyle.css">  		   
+	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
+	  		
+    <!-- The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
 	<!-- JS dependencies -->
@@ -42,27 +44,44 @@
     function onPlayerReady(event) {
         event.target.playVideo();
 	}
-	    
+	        
+	  var done = false;
+	  
+	  var currentTime = 0;
+	  
+	  //var stopAtQ1 = 4000;
+	  //var windowSize = 200;
+	  //var SEC2MILL = 1000;
+	  
+	  // Time in minutes, seconds at which Q1 is displayed
+	  var stopAtQ1M = 4;
+	  var stopAtQ1S = 53;
+	  
+	  //Time in minutes, seconds at which Q2 is displayed
+	  var stopAtQ2M = 7;
+	  var stopAtQ2S = 2;
+	  
+	  //Time in minutes, seconds at which Q3 is displayed
+	  var stopAtQ3M = 7;
+	  var stopAtQ3S = 46;
+	  
       // 5. The API calls this function when the player's state changes.
       //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      
-	  var done = false;
-	  var currentTime = 0;
-	  var windowSize = 200;
-	  var SEC2MILL = 1000;
-	  var stopAtQ1 = 24000;
-	  var stopAtQ2 = 8000;
-	  var stopAtQ3 = 12000;
-	  
+
       function onPlayerStateChange(event) {
 		
 		setInterval(function(){
-				
-			currentTime = player.getCurrentTime();
+		
+			currentTime = getCTime();
+					
+			var m = getCMin();
+			var s = getCSecd();
+			
+			document.getElementById("time").innerHTML = m + ":" + s;
 			
 			if (event.data == YT.PlayerState.PLAYING && !done) {
-				if( ( currentTime*SEC2MILL >= (stopAtQ1 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ1 + ( windowSize / 2 ) ) ) )
+				if( m == stopAtQ1M && s == stopAtQ1S)
+				//if( ( currentTime*SEC2MILL >= (stopAtQ1 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ1 + ( windowSize / 2 ) ) ) )
 				{
 				pauseVideo();
 				mydialog();
@@ -79,8 +98,13 @@
 		
 		setInterval(function(){
 		
-		currentTime = player.getCurrentTime();
-			if( ( currentTime*SEC2MILL >= (stopAtQ2 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ2 + ( windowSize / 2 ) ) ) && !done)
+		currentTime = getCTime();
+			
+			var m = getCMin();
+			var s = getCSecd();
+				
+			if ( m == stopAtQ2M && s == stopAtQ2S && !done)
+			//if( ( currentTime*SEC2MILL >= (stopAtQ2 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ2 + ( windowSize / 2 ) ) ) && !done)
 			{
 				pauseVideo();
 				mydialog2();
@@ -96,9 +120,14 @@
 		var done=false;
 				
 		setInterval(function(){
-			 
-			currentTime = player.getCurrentTime();
-			if( ( currentTime*SEC2MILL >= (stopAtQ3 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ3 + ( windowSize / 2 ) ) ) && !done)
+		
+		currentTime = getCTime();
+			
+			var m = getCMin();
+			var s = getCSecd();
+			 		
+			if ( m == stopAtQ3M && s == stopAtQ3S && !done)
+			//if( ( currentTime*SEC2MILL >= (stopAtQ3 - ( windowSize / 2 ) ) ) && ( currentTime*SEC2MILL <= ( stopAtQ3 + ( windowSize / 2 ) ) ) && !done)
 			{
 				pauseVideo();
 				mydialog3();
@@ -109,18 +138,38 @@
 		},100);		
 	  }
       
+	  //To get current player time
+	  function getCTime(){
+	  return player.getCurrentTime();
+	  }
+	   
+	  //To get current time in minutes
+	  function getCMin(){
+	   return Math.floor(getCTime()/60);
+	  } 
+	  
+	  //To get current time in seconds
+	  function getCSecd(){
+	  var secd = getCTime() % 60;
+	  return Math.ceil(secd);
+	  }
+	  
+	  //To stop video playback
       function stopVideo() {
         player.stopVideo();
       }
 	  
+	  //To pause video playback
 	  function pauseVideo(){
 		player.pauseVideo();
 	  }
-      
+    
+	//To display first quiz question as overlay
 	function mydialog(){
 		document.getElementById('quizoverlay').style.display="block";
 	}
-
+	
+	//To check the options of first quiz question selected by user for correctness
 	function check(){
 	
 		if(document.getElementById('option02').checked == true){
@@ -130,17 +179,20 @@
 			document.getElementById("check").innerHTML = "<label id='false'>Try again</label>";
 		}
 	}
-
+	
+	//To hide the first quiz question and continue video playback
 	function skip(){
 		document.getElementById('quizoverlay').style.display="none";
 		player.playVideo();
 		popup2();
 	}
 
+	//To display second quiz question as overlay
 	function mydialog2(){
 		document.getElementById('quizoverlay2').style.display="block";
 	}
 
+	//To check the options of second quiz question selected by user for correctness
 	function check2(){
  
 		if(document.getElementById('optionQ2').checked == true){
@@ -151,16 +203,19 @@
 		}
 	}
 	
+	//To hide the second quiz question and continue video playback
 	function skip2(){
 		document.getElementById('quizoverlay2').style.display="none";
 		player.playVideo();
 		popup3();
 	}
 
+	//To display third quiz question as overlay
 	function mydialog3(){
 		document.getElementById('quizoverlay3').style.display="block";
 	}
 
+	//To check the options of third quiz question selected by user for correctness
 	function check3(){
  
 		if(document.getElementById('opt03').checked == true){
@@ -171,6 +226,7 @@
 		}
 	}
 
+	//To hide the third quiz question and continue video playback
 	function skip3(){
 		document.getElementById('quizoverlay3').style.display="none";
 		player.playVideo();
@@ -204,12 +260,12 @@
 			<p></p>
 			<div class="form-group" class="button">
 				<button type="button" class="buttonCheck" onclick=check()>Check</button>
-				<button type="button" class="buttonSkip" onclick=skip()>Skip</button>
+				<button type="button" class="buttonSkip" onclick=skip()>Continue</button>
 			</div>
 			<p></p>
 			<label class="" for="check" id="check"></label>
 		</form> 
-</div>	
+</div>	<!-- Question 1 closing -->
 
 <!-- Question 2 -->
 
@@ -236,13 +292,13 @@
 			
 			<div class="form-group" class="button">
 				<button type="button" class="buttonCheck" onclick=check2()>Check</button>
-				<button type="button" class="buttonSkip" onclick=skip2()>Skip</button>
+				<button type="button" class="buttonSkip" onclick=skip2()>Continue</button>
 			</div>
 			
 			<p></p>
 			<label class="" for="check" id="check2"></label>
 		</form> 
-</div>
+</div> <!-- Question 2 closing -->
 
 <!-- Question 3 -->
 
@@ -273,7 +329,7 @@
 			
 			<div class="form-group" class="button">
 				<button type="button" class="buttonCheck" onclick=check3()>Check</button>
-				<button type="button" class="buttonSkip" onclick=skip3()>Skip</button>
+				<button type="button" class="buttonSkip" onclick=skip3()>Continue</button>
 			
 			</div>
 			
@@ -281,7 +337,7 @@
 			
 			<label class="" for="check" id="check3"></label>
 		</form> 
-</div>
+</div> <!-- Question 3 closing -->
 
 </body>
 </html>
